@@ -8,7 +8,7 @@ export default class UserController {
         const userRepository = getRepository(User);
 
         const users = await userRepository
-        .createQueryBuilder("users")
+        .createQueryBuilder()
         .getMany()
 
         return res.json(users);
