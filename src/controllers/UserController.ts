@@ -8,8 +8,10 @@ export default class UserController {
         const userRepository = getRepository(User);
 
         const users = await userRepository
-        .createQueryBuilder()
+        .createQueryBuilder("users")
         .getMany()
+
+        //const users = await userRepository.find({ relations: ["posts"] })
 
         return res.json(users);
     }
@@ -38,14 +40,14 @@ export default class UserController {
 
     public async update(req: Request, res: Response): Promise<Response> {
         const { id } = req.params;
-        const { name, email, password } = req.body;
+        const { name, email } = req.body;
         
         const userRepository = getRepository(User);
 
         const user = await userRepository
         .createQueryBuilder()
         .update(User)
-        .set({ name, email, password })
+        .set({ name, email })
         .where("id = :id", { id })
         .execute()
 

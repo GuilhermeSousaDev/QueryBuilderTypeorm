@@ -2,28 +2,30 @@ import {
     Column, 
     CreateDateColumn, 
     Entity, 
-    OneToMany, 
+    JoinColumn, 
+    ManyToOne, 
     PrimaryGeneratedColumn, 
     UpdateDateColumn 
 } from "typeorm";
-import { Post } from "./Post";
+import { User } from "./User";
 
-@Entity("user")
-export class User {
+@Entity("posts")
+export class Post {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    name: string;
-
-    @Column({ unique: true })
-    email: string;
+    title: string;
 
     @Column()
-    password: string;
+    content: string;
 
-    @OneToMany(() => Post, posts => posts.user)
-    posts: Post[];
+    @Column()
+    image: string;
+
+    @ManyToOne(() => User, user => user.posts)
+    @JoinColumn({ name: "user" })
+    user: User;
 
     @CreateDateColumn({ default: () => 'NOW()' })
     createdAt: Date;
