@@ -8,10 +8,9 @@ export default class UserController {
         const userRepository = getRepository(User);
 
         const users = await userRepository
-        .createQueryBuilder("users")
+        .createQueryBuilder("user")
+        .leftJoinAndSelect("user.posts", "posts.id")
         .getMany()
-
-        //const users = await userRepository.find({ relations: ["posts"] })
 
         return res.json(users);
     }

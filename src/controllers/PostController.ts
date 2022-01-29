@@ -9,9 +9,10 @@ export default class PostController {
         /*const posts = await postRepository
         .query("SELECT user.id, user.name, posts.title, posts.content FROM posts LEFT JOIN user ON user.id = posts.user");*/
 
-        const posts = await postRepository.find({ 
-            relations: ["user"] 
-        })
+        const posts = await postRepository
+            .createQueryBuilder("posts")
+            .leftJoinAndSelect("posts.user", "user.id")
+            .getMany()
 
         return res.json(posts);
     }
