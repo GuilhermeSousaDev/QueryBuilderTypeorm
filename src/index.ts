@@ -24,6 +24,7 @@ class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded());
         this.app.use(router);
+        this.app.use('/files', express.static('uploads/'))
     }
     
     public listen() {
